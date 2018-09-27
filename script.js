@@ -52,8 +52,19 @@ function sendActionToPlayer(tabid){
 }
 
 function getplayerUI(tab){
-    return `<div class="player" id="player-`+tab.id+`">
+    if(tab.audible)
+     return `<div class="player" id="player-`+tab.id+`">
         <div id="control-panel" class="control-panel active">
+            <div class="controls" id="control-`+tab.id+`">
+                <div class="prev" id = "prev-`+tab.id+`"></div>
+                <div id="play-`+tab.id+`" class="play" onclick="play(`+tab.id+`)"></div>
+                <div class="next" id="next-`+tab.id+`"></div>
+            </div>
+            <div class="name center" ><b id="title-`+tab.id+`">`+tab.title.substr(0,40).concat("...")+`</b></div>
+        </div>
+    </div>` ;
+    else return  `<div class="player" id="player-`+tab.id+`">
+        <div id="control-panel" class="control-panel">
             <div class="controls" id="control-`+tab.id+`">
                 <div class="prev" id = "prev-`+tab.id+`"></div>
                 <div id="play-`+tab.id+`" class="play" onclick="play(`+tab.id+`)"></div>
