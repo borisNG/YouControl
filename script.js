@@ -56,7 +56,7 @@ function getplayerUI(tab){
     if(tab.audible)
         active = "active" ; 
     return `<div class="player" id="player-`+tab.id+`">
-        <div id="control-panel" class="control-panel `+active+`">
+        <div id="control-panel-`+active+`" class="control-panel `+active+`">
             <div class="controls" id="control-`+tab.id+`">
                 <div class="prev" id = "prev-`+tab.id+`"></div>
                 <div id="play-`+tab.id+`" class="play" onclick="play(`+tab.id+`)"></div>
@@ -68,7 +68,12 @@ function getplayerUI(tab){
    
     }
 function play(tabid){
-
+    var div = getElementById("control-panel-"+tabid) ;
+    if(div.classList.contains("active")){
+        div.classList.remove("active")
+    }else{
+        div.classList.add("active")
+    }
 }
 
 
