@@ -9,5 +9,15 @@
       "default_title": "Have a good day",
       "default_popup": "popup.html"
     },
+    "background": {
+        "scripts": ["background.js"]
+      },
+    "content_scripts": [
+        {
+          "matches": ["*://*/*"],
+          "js": ["contentScript.js"],
+          "run_at": "document_idle"
+        }
+      ],
     "permissions": ["activeTab","tabs", "<all_urls>"]
    }

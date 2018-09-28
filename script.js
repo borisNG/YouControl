@@ -17,8 +17,44 @@ function addTextToUI(text){
 function createplayer(tab){
     addListenerToTab(tab) ;
     addTabToUI(tab) ;
+    addclicklistener(tab) ;
+}
+function addclicklistener(tab){
+    
+    document.getElementById('play-'+tab.id).addEventListener('click',function(){
+        var div = document.getElementById("control-panel-"+tab.id) ;
+        if(div.classList.contains("active")){
+            div.classList.remove("active")
+        }else{
+            div.classList.add("active")
+        }
+       
+        chrome.tabs.sendMessage(tab.id, {data: "PLAY_PAUSE"},function(response){
+            console.log(response)
+        });
+        
+    });
+    document.getElementById('next-'+tab.id).addEventListener('click',function(){   
+        chrome.tabs.sendMessage(tab.id, {data: "NEXT"},function(response){
+            document.getElementById("title-"+tab.id).innerHTML = reduceText(response.text) ;
+        });        
+    });
+    document.getElementById('prev-'+tab.id).addEventListener('click',function(){
+        
+        chrome.tabs.sendMessage(tab.id, {data: "PREV"},function(response){
+           document.getElementById("title-"+tab.id).innerHTML = reduceText(response.text) ;
+        });     
+    });
+    document.getElementById('replay-'+tab.id).addEventListener('click',function(){
+        
+        chrome.tabs.sendMessage(tab.id, {data: "REPLAY"},function(response){
+          // document.getElementById("title-"+tab.id).innerHTML = reduceText(response.text) ;
+        });     
+    });
+
 }
 function addListenerToTab(tab){
+
     chrome.tabs.onRemoved.addListener(function(tabId,removeInfo){
         if(tabids.includes(tabId))
         {
@@ -27,10 +63,9 @@ function addListenerToTab(tab){
     }) ;
     chrome.tabs.onUpdated.addListener(
         function(tabId, changeInfo, tab) {
-          updateTabContent(tab,changeInfo);
+         // updateTabContent(tab,changeInfo);
         }
       );
-
 }
 function updateTabContent(tab,changeInfo){
     var b = document.getElementById("title-"+tab.id);
@@ -47,7 +82,6 @@ function removeTabToUI(tab){
 }
 function sendActionToPlayer(tabid){
     chrome.tabs.sendMessage(tabid,{}, {"option":"no option"}, function(tab){
-
     });
 }
 
@@ -56,24 +90,20 @@ function getplayerUI(tab){
     if(tab.audible)
         active = "active" ; 
     return `<div class="player" id="player-`+tab.id+`">
-        <div id="control-panel-`+active+`" class="control-panel `+active+`">
+        <div id="control-panel-`+tab.id+`" class="control-panel `+active+`">
             <div class="controls" id="control-`+tab.id+`">
                 <div class="prev" id = "prev-`+tab.id+`"></div>
-                <div id="play-`+tab.id+`" class="play" onclick="play(`+tab.id+`)"></div>
+                <div id="play-`+tab.id+`" class="play"></div>
                 <div class="next" id="next-`+tab.id+`"></div>
+                <div class="replay" id="replay-`+tab.id+`"></div>
             </div>
-            <div class="name center" ><b id="title-`+tab.id+`">`+tab.title.substr(0,40).concat("...")+`</b></div>
+            <div class="name center" ><b id="title-`+tab.id+`">`+reduceText(tab.title)+`</b></div>
         </div>
     </div>` ;
    
     }
-function play(tabid){
-    var div = getElementById("control-panel-"+tabid) ;
-    if(div.classList.contains("active")){
-        div.classList.remove("active")
-    }else{
-        div.classList.add("active")
-    }
-}
 
+function reduceText(text){
+  return   String(text).substr(0,40).concat("...") ;
+}
 
