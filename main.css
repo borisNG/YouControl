@@ -10,13 +10,14 @@ html, body {
     -webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	overflow-x:hidden;overflow-y:auto;
-	
+	background: url(back.jpeg)
 }
 
 .player {
 	position: relative;
     margin-top: 5px ;
-    border: 1px solid black
+    border: 1px solid black;
+    
 }
 
 .player .info {
