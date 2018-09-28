@@ -12,11 +12,10 @@ function handleMessage(request, sender, sendResponse) {
         var btn = document.getElementsByClassName('ytp-prev-button ytp-button')[0];
         btn.click();    
         
-        sendResponse({response: btn.getAttribute("tooltip-text")});
+        sendResponse({text: btn.getAttribute("tooltip-text")});
     }
     if(request.data=="REPLAY"){
-        var btn = document.getElementsByClassName('ytp-replay-button ytp-button')[0];
-        btn.click();    
+        window.location.reload();  
         
         sendResponse({response: "good"});
     }
