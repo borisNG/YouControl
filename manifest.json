@@ -2,7 +2,7 @@
     "manifest_version": 2,
     "name": "YouControl",
     "description": "The best youtube controller ever.",
-    "version": "1.1",
+    "version": "1.2",
     "author": "Boris Nguimmo",
     "browser_action": {
       "default_icon": "youtube.png",
